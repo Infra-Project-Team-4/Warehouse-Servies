@@ -41,6 +41,16 @@ function login() {
 
         setMessage("로그인 성공", "success");
 
+	localStorage.setItem(
+  	    "username",
+    	    data.username
+	);
+
+	localStorage.setItem(
+    	    "role",
+    	    data.role
+	);
+
         setTimeout(() => {
             if (data.role === "operator") {
                 window.location.href = "/operator/home";
