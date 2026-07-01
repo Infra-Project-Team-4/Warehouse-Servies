@@ -6,10 +6,15 @@ from api.auth import auth_bp
 from api.stock import stock_bp
 from api.products import products_bp
 from api.dashboard import dashboard_bp
+from api.qrcode_api import qrcode_bp
+from api.history import history_bp
 
 def create_app():
     # Flask 애플리케이션 생성
     app = Flask(__name__)
+    
+    #Secret Key Add
+    app.secret_key = "smartwms-secret-key"
 
     # 설정 적용
     app.config.from_object(Config)
@@ -21,6 +26,8 @@ def create_app():
     app.register_blueprint(stock_bp)
     app.register_blueprint(products_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(qrcode_bp)
+    app.register_blueprint(history_bp)
 
     @app.route("/", methods=["GET"])
     def home():
@@ -50,6 +57,14 @@ def create_app():
     @app.route("/manager/products", methods=["GET"])
     def manager_products():
         return render_template("manager_products.html")
+    
+    @app.route("/manager/history", methods=["GET"])
+    def manager_history():
+        return render_template("manager_history.html")
+
+    @app.route("/manager/inventory", methods=["GET"])
+    def manager_inventory():
+        return render_template("manager_inventory.html")
 
     return app
 
